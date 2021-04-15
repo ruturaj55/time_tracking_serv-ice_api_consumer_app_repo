@@ -1,4 +1,4 @@
-package com.timetrackingrecord.restcontroller;
+package com.timetrackingrecord.controller;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.timetrackingrecord.controller.RecordRestController;
 import com.timetrackingrecord.model.Record;
+import com.timetrackingrecord.restcontroller.RecordRestController;
 
 @Controller
 public class RecordController {
