@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>EMPLOYEE MANAGEMENT SYSTEM</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+	crossorigin="anonymous">
+
+<style>
+footer {
+  text-align: center;
+  padding: 3px;
+  background-color: lightgrey;
+  color: darkblue;
+}
+
+header {
+  text-align: center;
+  padding: 3px;
+  background-color: lightgrey;
+  color: darkblue;
+}
+</style>
+	
+</head>
+<body style="background-color:rgb(240, 240, 240);">
+<br>
+		<article> 
+           <header > 
+                <h3><p style="color:maroon">Employee Time Tracking System</p></h3>
+            </header> 
+        </article> 
+	<div class="container">
+		
+		<hr>
+		<h4>Get Employee Record by Email Id :</h4>
+		<br>
+
+		<form action="#" th:action="@{/searchbyemaildata}"
+			th:object="${record}" method="GET"> 
+		<label class="control-label col-sm-0">Email:</label>
+		<input type="text"
+				th:field="*{email}" placeholder="Employee Email Id"
+				class="form-cotrol mb-4 col-4"> <br>
+		<button type="submit" class="btn btn-info col-2">Get
+				Employee Record</button>
+
+		</form>
+		<hr>
+		<a th:href="@{/home}">Back Employee Record List</a>
+		<hr>
+	</div>
+	<footer>
+  <p>Author: Ruturaj Shinde<br>
+  <a href="/">Home</a>
+  <h5>Thank you for using ETTS !</h5>
+</footer>
+</body>
+</html>
