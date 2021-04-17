@@ -1,4 +1,4 @@
-# time_tracking_service_api_consumer_app_details
+# employee_time_tracking_service_api_consumer_app_details (Service Client App)
 Employee Time Tracking Legacy Service API Consumer App Project 
 Application is designed and developed based on layered architecture.Here we have used TestTemplate to deal with external services API’s .By using HTTP methods like get ,post etc we have access to these services to get and post data from frontend by end user.
 
