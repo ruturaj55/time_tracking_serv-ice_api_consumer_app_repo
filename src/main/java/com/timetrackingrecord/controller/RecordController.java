@@ -13,25 +13,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.timetrackingrecord.model.Record;
-import com.timetrackingrecord.restcontroller.RecordRestController;
+import com.timetrackingrecord.service.EmployeeRecordServiceProvider;
 
 @Controller
 public class RecordController {
 	
 	@Autowired
-	RecordRestController recordRestController;
+	EmployeeRecordServiceProvider employeeRecordServiceProvider;
 
 	/**
-	 * its a get all records and display on front end
+	 * its a get all records function and displays all record on home page
 	 * 
-	 * method call on "/searchbyemail" action request
+	 * Its get all request
 	 * 
-	 * return all records from services
+	 * method call on "/home" action request
+	 * 
+	 * return all records from services provider
 	 */
 
 	@GetMapping("/home")
 	public String getEmployeeData(Model model) throws JsonMappingException, JsonProcessingException {
-		List<Record> recList = recordRestController.getAllEmployees();
+		List<Record> recList = employeeRecordServiceProvider.getAllEmployees();
 		model.addAttribute("recList", recList);
 		return "home";
 	}
@@ -53,6 +55,8 @@ public class RecordController {
 	/**
 	 * its a record search operation with email id input
 	 * 
+	 * its get record by email request to external service
+	 * 
 	 * method call on "/searchbyemaildata" action request
 	 * 
 	 * return available records list with email search
@@ -63,7 +67,7 @@ public class RecordController {
 	private String getEmployeeByEmail(@ModelAttribute("record") Record rec, Model model)
 			throws JsonProcessingException {
 		String email = rec.getEmail();
-		List<Record> recList = recordRestController.getRecordByEmail(email);
+		List<Record> recList = employeeRecordServiceProvider.getRecordByEmail(email);
 		if (null != recList.get(0)) {
 			model.addAttribute("recList", recList);
 			return "employeebyemail";
@@ -89,7 +93,7 @@ public class RecordController {
 
 	/**
 	 * its a new record save operation
-	 * 
+	 * its create record request (post request)
 	 * method call on "/saveRecord" action request
 	 * 
 	 */
@@ -97,7 +101,7 @@ public class RecordController {
 	public String createRecord(@ModelAttribute("record") Record record ,Model model) throws Exception {
 			List<Record> recList = new ArrayList<>();
 			Record resRecord =new Record();
-			resRecord=recordRestController.createRecord(record);
+			resRecord=employeeRecordServiceProvider.createRecord(record);
 			recList.add(resRecord);
 			if (!recList.isEmpty()) {
 				model.addAttribute("recList", recList);
@@ -106,8 +110,5 @@ public class RecordController {
 			}else {
 				return "error";
 			}
-			
-		
-
 	}
 }
