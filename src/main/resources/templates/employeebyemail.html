@@ -36,8 +36,15 @@ header {
 
 
 	<div class="jumbotron" >
+	<a th:href="@{/}"
+			class="btn btn-primary btn-sm mb-3">Home</a>
+		<a th:href="@{/searchbyemail}" class="btn btn-primary btn-sm mb-3">Find
+			Employee Record By Email</a> 
+			
+		<a th:href="@{/newrecord}"
+			class="btn btn-primary btn-sm mb-3">Add New Record</a>
 	
-	<h5 style="color:darkblue">Requested Employee Records Searched By Email Id :</h5>
+	<h5 style="color:darkblue">Requested Employee Records Searched By Email Id : <td th:text="${record.email}" ></h5>
 	
 	<a th:href="@{/home}">Back To Employee Record List</a>
 <hr>

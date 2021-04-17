@@ -34,8 +34,9 @@ header {
 		</header>
 	</article>
 	<div class="jumbotron">
-
-		<h5 style="color: darkblue">Record Created Successfully</h5>
+		
+		<a th:href="@{/}"
+			class="btn btn-primary btn-sm mb-3">Home</a>
 
 		<a th:href="@{/searchbyemail}" class="btn btn-primary btn-sm mb-3">Find
 			Employee Record By Email</a> 
@@ -43,8 +44,7 @@ header {
 		<a th:href="@{/newrecord}"
 			class="btn btn-primary btn-sm mb-3">Add New Record</a>
 			
-		<a th:href="@{/}"
-			class="btn btn-primary btn-sm mb-3">Home</a>
+		<h5 style="color: darkblue">Record Created Successfully !</h5>
 
 		<table border="2" class="table table-hover">
 			<thead>
