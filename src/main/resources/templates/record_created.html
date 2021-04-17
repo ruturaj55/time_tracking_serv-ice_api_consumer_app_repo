@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>EMPLOYEE TIME TRACKING SYSTEM</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+	crossorigin="anonymous">
+
+<style>
+footer {
+	text-align: center;
+	padding: 3px;
+	background-color: lightgrey;
+	color: darkblue;
+}
+
+header {
+	text-align: center;
+	padding: 3px;
+	background-color: lightgrey;
+	color: darkblue;
+}
+</style>
+</head>
+<body style="background-color: rgb(240, 240, 240);">
+	<br>
+	<article>
+		<header>
+			<h3>
+				<p style="color: maroon">Employee Time Tracking System</p>
+			</h3>
+		</header>
+	</article>
+	<div class="jumbotron">
+
+		<h5 style="color: darkblue">Record Created Successfully</h5>
+
+		<a th:href="@{/searchbyemail}" class="btn btn-primary btn-sm mb-3">Find
+			Employee Record By Email</a> 
+			
+		<a th:href="@{/newrecord}"
+			class="btn btn-primary btn-sm mb-3">Add New Record</a>
+			
+		<a th:href="@{/}"
+			class="btn btn-primary btn-sm mb-3">Home</a>
+
+		<table border="2" class="table table-hover">
+			<thead>
+				<tr>
+					<th>Start Date & Time</th>
+					<th>End Date & Time</th>
+					<th>Email Id</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="record : ${recList}">
+					<td th:text="${record.start}"></td>
+					<td th:text="${record.end}"></td>
+					<td th:text="${record.email}"></td>
+				<tr>
+			</tbody>
+		</table>
+
+	</div>
+
+	<footer>
+		<p>
+			Author: Ruturaj Shinde<br> <a href="/">Home</a>
+		<h5>Thank you for using ETTS !</h5>
+	</footer>
+</body>
+</html>

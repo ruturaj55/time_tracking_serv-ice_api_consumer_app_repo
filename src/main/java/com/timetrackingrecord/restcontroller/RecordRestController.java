@@ -1,9 +1,5 @@
 package com.timetrackingrecord.restcontroller;
 
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +10,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,7 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.timetrackingrecord.model.Record;
 
 @RestController
-
 public class RecordRestController {
 
 	
@@ -49,8 +46,11 @@ public class RecordRestController {
 	 * 
 	 * @throws JsonProcessingException
 	 */
+	
 	public List<Record> getAllEmployees() throws JsonMappingException, JsonProcessingException {
 		String GET_EMPLOYEES = "http://localhost:8080/records";
+		//String GET_EMPLOYEES = "http://192.168.99.100:8080/records";
+		
 		HttpHeaders header = new HttpHeaders();
 		header.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		HttpEntity<Record> entity = new HttpEntity<Record>(header);
@@ -85,68 +85,38 @@ public class RecordRestController {
 		Record[] emp2 = objectMapper.readValue(jsonStr, Record[].class);
 		List<Record> empList = new ArrayList<Record>(Arrays.asList(emp2));
 		return empList;
+		
 	}
 
-//	@PostMapping
-//	public void saveRecord(@RequestBody Record records) throws Exception {
-//		String POST_EMPLOYEE_RECORD = "http://localhost:8080/records";
-//		HttpHeaders header = new HttpHeaders();
-//		header.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-//		HttpEntity<Record> entity=new HttpEntity<Record>(records,header);
-//		try {
-//			ResponseEntity<String> postForEntity = restTemplate.postForEntity(POST_EMPLOYEE_RECORD, records, String.class);
-//			System.out.println(postForEntity.getBody());
-//			ResponseEntity<String> exchange = restTemplate.exchange(POST_EMPLOYEE_RECORD, HttpMethod.POST, entity, String.class);
-//			System.out.println(exchange.getBody());
-//			ResponseEntity<Record> responseEntity=restTemplate.postForEntity(POST_EMPLOYEE_RECORD, entity, Record.class);
-//			System.out.println(responseEntity.getBody());
-//		} catch (Exception e) {
-//			throw new Exception("Record Not saved");
-//		}
-//		
-//
-//	}
-
+	
 	/**
-	 * its a record save call with given inpu put
+	 * its a create record call with given inpu data
 	 * 
-	 * method call on "/searchbyemaildata" action request
+	 * method call on "/saveRecord" action request
 	 * 
-	 * return available record list with email search
-	 * 
-	 * @throws JsonProcessingException
-	 */
-	public void saveRecord(@RequestBody Record records) throws Exception {
-		URL url = new URL("http://localhost:8080/records");
-		HttpURLConnection http = (HttpURLConnection) url.openConnection();
-		http.setRequestMethod("POST");
-		http.setDoOutput(true);
-		http.setRequestProperty("Content-Type", "application/json");
-		String data = getRequestData(records);
-		// String data = "email=john.doe@gmail.com&start=28.11.2016 08:00&end=28.11.2016
-		// 09:00";
-
-		byte[] out = data.getBytes(StandardCharsets.UTF_8);
-
-		OutputStream stream = http.getOutputStream();
-		stream.write(out);
-		System.out.println(http.getResponseCode() + " " + http.getResponseMessage());
-		http.disconnect();
-
-	}
-
-	/**
-	 * 
-	 * return formated request data for post method operation
+	 * return successfully created record  
 	 * 
 	 */
-	private String getRequestData(Record record) {
-		String requestData = "";
-		char c = '"';
-		StringBuilder sb = new StringBuilder(requestData);
-		sb.append(c + "email=" + record.getEmail()).append("&start=" + record.getStart())
-				.append("&end=" + record.getEnd() + c);
-		return sb.toString();
+	
+	public Record	createRecord(Record records){
+		String POST_EMPLOYEE_RECORD = "http://localhost:8080/records";
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+		map.add("start", records.getStart());
+		map.add("end", records.getEnd());
+		map.add("email",records.getEmail());
+
+		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+
+		ResponseEntity<Record> response = restTemplate.postForEntity( POST_EMPLOYEE_RECORD, request , Record.class );
+		
+		System.out.println(response.getBody());
+		
+		return records;
+		
 	}
+
+	
 
 }

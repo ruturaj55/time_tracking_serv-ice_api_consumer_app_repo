@@ -1,5 +1,6 @@
 package com.timetrackingrecord.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,13 +94,20 @@ public class RecordController {
 	 * 
 	 */
 	@PostMapping("/saveRecord")
-	public void saveRecord(@ModelAttribute("record") Record record) throws Exception {
-		try {
-			recordRestController.saveRecord(record);
+	public String createRecord(@ModelAttribute("record") Record record ,Model model) throws Exception {
+			List<Record> recList = new ArrayList<>();
+			Record resRecord =new Record();
+			resRecord=recordRestController.createRecord(record);
+			recList.add(resRecord);
+			if (!recList.isEmpty()) {
+				model.addAttribute("recList", recList);
+				return "record_created";
 
-		} catch (Exception e) {
-			throw new Exception("Record Not saved");
-		}
+			}else {
+				return "error";
+			}
+			
+		
 
 	}
 }
