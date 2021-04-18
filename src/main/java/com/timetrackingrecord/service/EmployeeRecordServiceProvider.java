@@ -51,7 +51,6 @@ public class EmployeeRecordServiceProvider {
 	public List<Record> getAllEmployees() throws JsonMappingException, JsonProcessingException {
 		String GET_ALL_RECORDS_URL = "http://localhost:8080/records";
 		// String GET_ALL_RECORDS_URL = "http://192.168.99.100:8080/records";
-
 		HttpHeaders header = new HttpHeaders();
 		header.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		// HttpEntity<Record> entity = new HttpEntity<Record>(header);
@@ -78,8 +77,7 @@ public class EmployeeRecordServiceProvider {
 	 */
 	public List<Record> getRecordByEmail(String email) throws JsonProcessingException {
 		String GET_RECORD_BY_EMAIL = "http://localhost:8080/records?" + "email=" + email;
-		// String GET_RECORD_BY_EMAIL = "http://192.168.99.100/records?" + "email=" +
-		// email;
+		// String GET_RECORD_BY_EMAIL = "http://192.168.99.100/records?" + "email=" + email;
 		HttpHeaders header = new HttpHeaders();
 		header.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		// HttpEntity<Record> entity = new HttpEntity<Record>(header);
@@ -113,15 +111,10 @@ public class EmployeeRecordServiceProvider {
 		map.add("start", records.getStart());
 		map.add("end", records.getEnd());
 		map.add("email", records.getEmail());
-
 		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
-
 		ResponseEntity<Record> response = restTemplate.postForEntity(POST_RECORD_URL, request, Record.class);
-
 		System.out.println(response.getBody());
-
 		return records;
-
 	}
 
 }
